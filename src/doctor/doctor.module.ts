@@ -11,5 +11,6 @@ import { AppService } from 'src/app.service';
   ],
   controllers: [DoctorController],
   providers: [DoctorService, AppService],
+  exports: [DoctorService]
 })
 export class DoctorModule {}

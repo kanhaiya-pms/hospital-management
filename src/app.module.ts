@@ -4,6 +4,11 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DoctorModule } from './doctor/doctor.module';
+import { AuthModule } from './auth/auth.module';
+import { PatientModule } from './patient/patient.module';
+import { AppoinmentModule } from './appoinment/appoinment.module';
+import { AppointmentModule } from './appointment/appointment.module';
+import { AppoinmentModule } from './appoinment/appoinment.module';
 
 @Module({
   imports: [
@@ -12,7 +17,11 @@ import { DoctorModule } from './doctor/doctor.module';
       envFilePath: ".env"
     }),
     MongooseModule.forRoot(process.env.DB_URI),
-    DoctorModule
+    DoctorModule,
+    AuthModule,
+    PatientModule,
+    AppoinmentModule,
+    AppointmentModule
   ],
   controllers: [AppController],
   providers: [AppService]

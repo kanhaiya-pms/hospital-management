@@ -10,25 +10,24 @@ import { AppService } from 'src/app.service';
 @Injectable()
 export class DoctorService {
   constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>,
-  private readonly appService: AppService
-) {}
-  
+    private readonly appService: AppService
+  ) { }
+
 
 
 
   async create(createDoctorDto: CreateDoctorDto) {
-    const doctor = await this.doctorModel.findOne({ username: createDoctorDto.username})
+    const doctor = await this.doctorModel.findOne({ email: createDoctorDto.email })
 
     if (doctor) {
-      throw new BadRequestException("username should be uniqe")
+      throw new BadRequestException("email should be uniqe")
     }
 
-
-    const userName = await this.appService.generateUserName(createDoctorDto)
+    const userName = await this.appService.generateUserName(createDoctorDto, "DOC")
 
     const hashPass = await bcrypt.hash(createDoctorDto.password, 10)
 
-    const {password, username, ...dto} =createDoctorDto
+    const { password, username, ...dto } = createDoctorDto
 
     return await this.doctorModel.create({
       username: userName,
@@ -37,19 +36,24 @@ export class DoctorService {
     });
   }
 
-  findAll() {
-    return this.doctorModel.find();
+  async findAll() {
+    const data = await this.doctorModel.find();
+    const count = await this.doctorModel.countDocuments();
+    return {
+      data,
+      count
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} doctor`;
+  async findOne(username: string) {
+    return await this.doctorModel.findOne({username});
   }
 
-  update(id: number, updateDoctorDto: UpdateDoctorDto) {
-    return `This action updates a #${id} doctor`;
+ async update(id: string, dto: UpdateDoctorDto) {
+    return await this.doctorModel.findByIdAndUpdate(id,dto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} doctor`;
+  async remove(id: string) {
+    return await this.doctorModel.findByIdAndDelete(id);
   }
 }

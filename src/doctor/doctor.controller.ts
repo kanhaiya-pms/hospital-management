@@ -21,16 +21,16 @@ export class DoctorController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.doctorService.findOne(+id);
+    return this.doctorService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto) {
-    return this.doctorService.update(+id, updateDoctorDto);
+    return this.doctorService.update(id, updateDoctorDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.doctorService.remove(+id);
+    return this.doctorService.remove(id);
   }
 }

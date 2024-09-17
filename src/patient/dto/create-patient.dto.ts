@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { eRole } from "src/utils/interface"
 
-export class CreateDoctorDto {
+export class CreatePatientDto {
     @ApiProperty()
     first_name: string
 

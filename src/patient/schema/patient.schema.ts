@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import { eRole } from "src/utils/interface";
 
-export type DoctorDocument = HydratedDocument<Doctor>;
+export type PatientDocument = HydratedDocument<Patient>;
 
-@Schema()
-export class Doctor {
+@Schema({versionKey: false, timestamps: true})
+export class Patient {
     @Prop({type: String, required: true})
     first_name: string
 
@@ -24,23 +24,17 @@ export class Doctor {
     @Prop({type: String, required: true})
     password: string
 
-    @Prop({type: [String], required: true})
-    highest_edu: string[]
-
-    @Prop({type: [String], required: true})
-    document: string[]
-
     @Prop({type: String, required: false, unique: true, default: ""})
     username: string
 
     @Prop()
     dp: string
 
-    @Prop({ default: null})
-    otp: string
+    @Prop({default: null})
+    otp: number
 
-    @Prop({default: eRole.DOCTOR, required: false})
+    @Prop({default: eRole.PATIENT, required: false})
     role: eRole
 }
 
-export const DoctorSchema = SchemaFactory.createForClass(Doctor)
+export const PatientSchema = SchemaFactory.createForClass(Patient)

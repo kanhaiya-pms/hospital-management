@@ -16,12 +16,17 @@ async function bootstrap() {
     .setDescription('The hospital-management API description')
     .setVersion('1.0')
     .addTag('hospital-management')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+  })
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT, ()=>{
-    Logger.debug(`server is runnning on http://localhost:${process.env.PORT}`)
+    Logger.debug(`server is runnning on http://localhost:${process.env.PORT}/api`)
   });
 }
 bootstrap();

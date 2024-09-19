@@ -3,3 +3,9 @@ export enum eRole {
     DOCTOR="DOCTOR",
     PATIENT="PATIENT"
 }
+
+export enum eStatus {
+    REQUEST="REQUEST",
+    ACCEPTED="ACCEPTED",
+    REJECT="REJECT"
+}

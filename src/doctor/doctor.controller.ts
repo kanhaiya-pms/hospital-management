@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags("doctor")
 @Controller('doctor')
@@ -17,6 +18,13 @@ export class DoctorController {
   @Get()
   findAll() {
     return this.doctorService.findAll();
+  }
+
+  @Get('my-appointment')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  myAppointment(@Request() req: any) {
+    return this.doctorService.myAppointment(req.user.sub);
   }
 
   @Get(':id')

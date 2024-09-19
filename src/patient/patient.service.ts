@@ -6,11 +6,13 @@ import { Patient } from './schema/patient.schema';
 import { Model } from 'mongoose';
 import { AppService } from 'src/app.service';
 import * as bcrypt from 'bcrypt';
+import { AppointmentService } from 'src/appointment/appointment.service';
 
 @Injectable()
 export class PatientService {
   constructor(@InjectModel(Patient.name) private PatientModel: Model<Patient>,
-  private appService: AppService
+  private readonly appService: AppService,
+  private readonly appointmentService: AppointmentService
 ){}
 
 
@@ -45,6 +47,10 @@ export class PatientService {
 
   async findOne(username: string) {
     return await this.PatientModel.findOne({username});
+  }
+
+ async myAppointment(id: string){
+    return await this.appointmentService.Patientappointment(id)
   }
 
 
